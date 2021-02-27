@@ -71,4 +71,22 @@ class UsersController extends Controller
                 'users' => $followers,
             ]);
     }
+    
+        public function favorites($id)
+    {
+        //idの値でタイムラインを検索、取得
+        $micropost = User::findOrFail($id);
+        
+        //関係するモデルの件数をロード
+        $micropost->loadRelationshipCounts();
+        
+        //ユーザのお気に入り一覧取得
+        $favorites = $micropost->favorites()->paginate(10);
+        
+        //お気に入り一覧ビューに表示
+        return view('users.favorites',[
+                'user' => $micropost,
+                'microposts' => $favorites,
+            ]);
+    }
 }

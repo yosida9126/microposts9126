@@ -17,9 +17,9 @@ class MicropostsController extends Controller
             $microposts = $user->feed_microposts()->orderBy('created_at','desc')->paginate(10);
             
             $data = [
-                    'user' => $user,
-                    'microposts' => $microposts,
-                ];
+                'user' => $user,
+                'microposts' => $microposts,
+            ];
         }
         //welcomeビューで表示
         return view('welcome',$data);
