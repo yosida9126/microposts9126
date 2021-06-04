@@ -19,4 +19,21 @@ class Micropost extends Model
     {
         return $this->belongsToMany(User::class,'favorites','micropost_id','user_id')->withTimestamps();
     }
+    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class,'post_tag','post_id','tag_id')->withTimestamps();
+    }
+    
+    public function tagging($postId)
+    {
+        $this->tags()->attach($postId);
+        return true;
+    }
+    
+    public function untagging($postId)
+    {
+        $this->tags()->detach($postId);
+        return true;
+    }
 }

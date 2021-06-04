@@ -11,12 +11,28 @@
                         <span class="text-muted">posted at {{ $micropost->created_at }}</span>
                     </div>
                     <div>
+                        {{--タグ一覧--}}
+                        <ul class="list-unstyled">
+                            <?php $tags = $micropost->tags()->get() ?>
+                            <li>tag: 
+                                @foreach($tags as $tag)
+                                    {!! link_to_route('tags.show',$tag->tag,['tag' => $tag->id]) !!}
+                                @endforeach
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
                         {{-- 投稿内容 --}}
-                        <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
+                        <p class="mb-0">content: {!! nl2br(e($micropost->content)) !!}</p>
                     </div>
                     <div class="d-flex flex-row">
                         <div class="p-2">
                             @include('favorites.favorite_button')
+                        </div>
+                        <div class="p-2">
+                            @if(Auth::id() == $micropost->user_id)
+                                {!! link_to_route('microposts.edit','edit',['micropost' => $micropost->id],['class' => 'btn btn-primary btn-sm']) !!}
+                            @endif
                         </div>
                         <div class="p-2">
                             @if(Auth::id() == $micropost->user_id)
