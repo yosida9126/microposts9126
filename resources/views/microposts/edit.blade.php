@@ -15,6 +15,7 @@
                         </div>
                         <div class="col-10">
                             {!! Form::model($micropost,['route' => ['microposts.update',$micropost->id], 'method' => 'put']) !!}
+                            @csrf
                                 <div class="form-group">
                                     {!! Form::label('content','content:') !!}
                                     {!! Form::text('content',null,['class' => 'form-control']) !!}
